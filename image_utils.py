@@ -13,6 +13,7 @@ You should also have the needed images downloaded locally.
 import os
 import glob
 from PIL import Image
+import numpy
 from numpy import asarray
 import cv2
 import inspect
@@ -92,5 +93,7 @@ def create_raster(source_dir):
 crop_images(img_source="/Users/areitu/Desktop/S2A_MSIL2A_20200720T102031_N0214_R065_T32TMS_20200720T131523.SAFE/GRANULE/L2A_T32TMS_A026517_20200720T102636/IMG_DATA/R20m",
             img_destination="/Users/areitu/espace_bfea/Sentinel-2", upper_left_x=900, upper_left_y=2100, width=700, length=1000)
 
+crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20210429T161829_N0300_R040_T21XWC_20210429T210017.SAFE/GRANULE/L2A_T21XWC_A021659_20210429T161824/IMG_DATA/R20m/",
+            img_destination="/Users/areitu/espace_bfea/Sentinel-2", upper_left_x=0, upper_left_y=0, width=5490, length=5490)
 create_raster(source_dir="/Users/areitu/espace_bfea/Sentinel-2/")
 """
