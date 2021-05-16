@@ -59,7 +59,10 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
 
 
 def main():
-    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2"), output="Sentinel.png")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2"), output="Sentinel.png")
+    print(image_utils.pixel2coord("/Users/areitu/Downloads/S2A_MSIL2A_20170731T160901_N9999_R140_T21XWB_20210516T141643.SAFE/GRANULE/L2A_T21XWB_A011005_20170731T160903/IMG_DATA/R60m/T21XWB_20170731T160901_TCI_60m.jp2", 0, 0))
+
+
 
 if __name__ == "__main__":
     main()

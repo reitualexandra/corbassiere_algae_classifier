@@ -18,6 +18,8 @@ from numpy import asarray
 import cv2
 import inspect
 import datetime
+from osgeo import gdal
+import math
 
 
 BANDS = {
@@ -86,6 +88,23 @@ def create_raster(source_dir):
         image_data = normalize_image(image_path)
         IMAGES[band] = image_data
     return IMAGES
+
+
+def pixel2coord(img, x, y):
+    ds = gdal.Open(img, gdal.GA_ReadOnly)
+    xoff, a, b, yoff, d, e = ds.GetGeoTransform()
+    print(xoff,a,b)
+    print(yoff,d,e)
+
+def coord2pixel(img, xp, yp):
+    ds = gdal.Open(img, gdal.GA_ReadOnly)
+    xoff, a, b, yoff, d, e = ds.GetGeoTransform()
+    a1 = numpy.array([[a,b],[d,e]])
+    b1 = numpy.array([xp-xoff,yp-yoff])
+    xy = numpy.linalg.solve(a1,b1)
+    x = math.ceil(xy[0])
+    y = math.ceil(xy[1])
+    return [x, y]
 
 """
 # USAGE EXAMPLE: 
