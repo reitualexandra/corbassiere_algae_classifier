@@ -113,12 +113,12 @@ def create_dataset(file=HCRF_FILE, savefig=False):
         min_wl_index = BANDS[band][0] - 350
         max_wl_index = BANDS[band][1] - 350
 
-        HA[band] = HA_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index')
-        LA[band] = LA_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index')
-        SN[band] = CI_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index')
-        CC[band] = CC_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index')
-        WAT[band] = WAT_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index')
-        CI[band] = SN_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index')
+        HA[band] = HA_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        LA[band] = LA_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        SN[band] = CI_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        CC[band] = CC_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        WAT[band] = WAT_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        CI[band] = SN_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
 
     if savefig:
         ax = plt.subplot(1, 1, 1)

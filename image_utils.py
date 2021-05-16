@@ -13,6 +13,7 @@ You should also have the needed images downloaded locally.
 import os
 import glob
 from PIL import Image
+import numpy
 from numpy import asarray
 import cv2
 import inspect
