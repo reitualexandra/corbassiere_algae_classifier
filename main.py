@@ -43,11 +43,11 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
     img = Image.fromarray(MAP_DATA, 'RGB')
     img.save(output)
 
-    custom_lines = [Line2D([0], [0], color="skyblue", lw=4),
+    custom_lines = [Line2D([0], [0], color="lightskyblue", lw=4),
                     Line2D([0], [0], color="white", lw=4),
-                    Line2D([0], [0], color="lightgreen", lw=4),
-                    Line2D([0], [0], color="green", lw=4),
-                    Line2D([0], [0], color="mediumblue", lw=4),
+                    Line2D([0], [0], color="mediumseagreen", lw=4),
+                    Line2D([0], [0], color="darkgreen", lw=4),
+                    Line2D([0], [0], color="royalblue", lw=4),
                     Line2D([0], [0], color="black", lw=4)]
 
     fig, ax = plt.subplots()
@@ -59,8 +59,7 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
 
 
 def main():
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2"), output="Sentinel.png")
-    print(image_utils.pixel2coord("/Users/areitu/Downloads/S2A_MSIL2A_20170731T160901_N9999_R140_T21XWB_20210516T141643.SAFE/GRANULE/L2A_T21XWB_A011005_20170731T160903/IMG_DATA/R60m/T21XWB_20170731T160901_TCI_60m.jp2", 0, 0))
+    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2"), output="Sentinel.png")
 
 
 

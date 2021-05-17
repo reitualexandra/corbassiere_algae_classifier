@@ -53,35 +53,19 @@ def create_dataset(file=HCRF_FILE, savefig=False):
                '5_8_16_site3_ice5', '5_8_16_site3_ice6', '5_8_16_site3_ice7', '5_8_16_site3_ice8',
                '5_8_16_site3_ice9']
 
-    LAsites = ['14_7_S2', '14_7_S3', '14_7_SB2', '14_7_SB3', '14_7_SB7', '15_7_S2',
-               '15_7_SB4', '20_7_SB1', '20_7_SB3', '21_7_S1', '21_7_S5', '21_7_SB4', '22_7_SB2',
-               '22_7_SB3', '22_7_S1', '23_7_S1', '23_7_S2', '24_7_S2', 'MA_1', 'MA_2', 'MA_3',
-               'MA_5', 'MA_6', 'MA_8', 'MA_9', 'MA_10', 'MA_12', 'MA_13', 'MA_16', 'MA_19',
-               '13_7_S1', '13_7_S3', '14_7_S1', '15_7_S1', '15_7_SB2', '20_7_SB2', '21_7_SB5',
-               '21_7_SB8', '25_7_S3', '5_8_16_site2_ice10', '5_8_16_site2_ice5',
-               '5_8_16_site2_ice9', '27_7_16_SITE3_WHITE3']
+    LAsites = ['14_7_S2', '14_7_SB3', '14_7_SB7', '15_7_S2',
+            '21_7_S5', '21_7_SB4',
+                '23_7_S1', '24_7_S2', 'MA_19',
+               '27_7_16_SITE3_ALG1', '27_7_16_SITE3_ALG2', '14_7_S1', '15_7_S1', '15_7_SB2', '20_7_SB2', '21_7_SB5',
+               '21_7_SB8', '25_7_S3']
 
-    CIsites = ['21_7_S4', '13_7_SB3', '15_7_S4', '15_7_SB1', '15_7_SB5', '21_7_S2',
-               '21_7_SB3', '22_7_S2', '22_7_S4', '23_7_SB1', '23_7_SB2', '23_7_S4',
-               'WI_1', 'WI_2', 'WI_4', 'WI_5', 'WI_6', 'WI_7', 'WI_9', 'WI_10', 'WI_11',
-               'WI_12', 'WI_13', '27_7_16_SITE3_WHITE1', '27_7_16_SITE3_WHITE2',
-               '27_7_16_SITE2_ICE2', '27_7_16_SITE2_ICE4', '27_7_16_SITE2_ICE6',
-               '5_8_16_site2_ice1', '5_8_16_site2_ice2', '5_8_16_site2_ice3',
-               '5_8_16_site2_ice4', '5_8_16_site2_ice6', '5_8_16_site2_ice8',
-               '5_8_16_site3_ice1', '5_8_16_site3_ice4']
+    CIsites = ['5_8_16_site3_ice9', '5_8_16_site3_ice4', '5_8_16_site2_ice7']
 
-    CCsites = ['DISP1', 'DISP2', 'DISP3', 'DISP4', 'DISP5', 'DISP6', 'DISP7', 'DISP8',
-               'DISP9', 'DISP10', 'DISP11', 'DISP12', 'DISP13', 'DISP14', '27_7_16_SITE3_DISP1',
-               '27_7_16_SITE3_DISP3']
+    CCsites = ['DISP3', 'DISP4', 'DISP9', 'DISP13', 'DISP14']
 
     WATsites = ['21_7_SB5', '21_7_SB8', 'WAT_1', 'WAT_3', 'WAT_6']
 
-    SNsites = ['14_7_S4', '14_7_SB6', '14_7_SB8', '17_7_SB2', 'SNICAR100', 'SNICAR200',
-               'SNICAR300', 'SNICAR400', 'SNICAR500', 'SNICAR600', 'SNICAR700', 'SNICAR800',
-               'SNICAR900', 'SNICAR1000', '27_7_16_KANU_', '27_7_16_SITE2_1',
-               '5_8_16_site1_snow10', '5_8_16_site1_snow2', '5_8_16_site1_snow3',
-               '5_8_16_site1_snow4', '5_8_16_site1_snow6', '5_8_16_site1_snow7',
-               '5_8_16_site1_snow9']
+    SNsites = ['14_7_S4', '14_7_SB6']
 
     # Create dataframes for ML algorithm
 
@@ -115,10 +99,10 @@ def create_dataset(file=HCRF_FILE, savefig=False):
 
         HA[band] = HA_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
         LA[band] = LA_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
-        SN[band] = CI_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        CI[band] = CI_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
         CC[band] = CC_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
         WAT[band] = WAT_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
-        CI[band] = SN_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        SN[band] = SN_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
 
     if savefig:
         ax = plt.subplot(1, 1, 1)
@@ -135,10 +119,12 @@ def create_dataset(file=HCRF_FILE, savefig=False):
 
 
 COLORS = {
-    1: [51, 255, 255], # BLUE - ICE
+    1: [135, 206, 250], # BLUE - ICE
     2: [255, 255, 255], # WHITE - SNOW
-    3: [0, 255, 0], # LIGHT GREEN - ALGAE_LOW
-    4: [0, 102, 0], # DARK GREEN - ALGAE_HIGH
-    5: [0, 76, 153], # WATER
+    3: [60, 179, 113], # LIGHT GREEN - ALGAE_LOW
+    4: [0, 100, 0], # DARK GREEN - ALGAE_HIGH
+    5: [65, 105, 225], # WATER
     6: [0, 0, 0], #CRYOCONITE
 }
+
+#create_dataset(savefig=True)
