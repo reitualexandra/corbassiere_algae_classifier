@@ -116,3 +116,11 @@ crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20210429T161829_N0300
             img_destination="/Users/areitu/espace_bfea/Sentinel-2", upper_left_x=0, upper_left_y=0, width=5490, length=5490)
 create_raster(source_dir="/Users/areitu/espace_bfea/Sentinel-2/")
 """
+#crop_images(img_source="/Users/areitu/Downloads/S2A_MSIL2A_20200713T103031_N9999_R108_T32TMS_20210517T174453.SAFE/GRANULE/L2A_T32TMS_A026417_20200713T103703/IMG_DATA/R20m",
+#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Aletsch", upper_left_x=1000, upper_left_y=2300, width=500, length=600)
+#crop_images(img_source="/Users/areitu/Downloads/S2A_MSIL2A_20200713T103031_N9999_R108_T32TMS_20210517T174453.SAFE/GRANULE/L2A_T32TMS_A026417_20200713T103703/IMG_DATA/R20m",
+#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Fiescher", upper_left_x=1500, upper_left_y=2200, width=300, length=500)
+#crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20200718T102559_N9999_R108_T32TMR_20210517T184654.SAFE/GRANULE/L2A_T32TMR_A017580_20200718T103605/IMG_DATA/R20m/",
+#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Gorner", upper_left_x=520, upper_left_y=300, width=150, length=150)
+#crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20200718T102559_N9999_R108_T32TLR_20210517T190440.SAFE/GRANULE/L2A_T32TLR_A017580_20200718T103605/IMG_DATA/R20m/",
+#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/MerDeGlace", upper_left_x=1930, upper_left_y=640, width=270, length=270)

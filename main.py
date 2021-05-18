@@ -9,7 +9,7 @@ from image_utils import log
 
 
 def minimum_distance_classification(source_dir, output="Classification.png", title="Glacier Classification"):
-    data_utils.create_dataset(file=data_utils.HCRF_FILE)
+    data_utils.create_dataset(file=data_utils.HCRF_FILE, savefig=True)
     IMAGES = image_utils.create_raster(source_dir)
 
     CI = [data_utils.CI[x] for x in IMAGES.keys()]
@@ -59,8 +59,12 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
 
 
 def main():
-    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2"), output="Sentinel.png")
-
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Greenland"), output="Sentinel_Greenland.png")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Aletsch"), output="Sentinel_Aletsch.png")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Morteratsch"), output="Sentinel_Morteratsch.png")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Fiescher"), output="Fiescher.png")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Gorner"), output="Gorner.png")
+    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "MerDeGlace"), output="MerDeGlaceMe.png")
 
 
 if __name__ == "__main__":
