@@ -11,13 +11,16 @@ from image_utils import log
 def minimum_distance_classification(source_dir, output="Classification.png", title="Glacier Classification"):
     data_utils.create_dataset(file=data_utils.HCRF_FILE, savefig=True)
     IMAGES = image_utils.create_raster(source_dir)
+    bands = list(IMAGES.keys())
+    bands.remove("coordinates")
+    coordinates = IMAGES["coordinates"]
 
-    CI = [data_utils.CI[x] for x in IMAGES.keys()]
-    SN = [data_utils.SN[x] for x in IMAGES.keys()]
-    LA = [data_utils.LA[x] for x in IMAGES.keys()]
-    HA = [data_utils.HA[x] for x in IMAGES.keys()]
-    WAT = [data_utils.WAT[x] for x in IMAGES.keys()]
-    CC = [data_utils.CC[x] for x in IMAGES.keys()]
+    CI = [data_utils.CI[x] for x in bands]
+    SN = [data_utils.SN[x] for x in bands]
+    LA = [data_utils.LA[x] for x in bands]
+    HA = [data_utils.HA[x] for x in bands]
+    WAT = [data_utils.WAT[x] for x in bands]
+    CC = [data_utils.CC[x] for x in bands]
 
     image_shape = numpy.shape(list(IMAGES.items())[0][1])
     MAP_DATA = numpy.zeros([image_shape[0], image_shape[1], 3], dtype=numpy.uint8)
@@ -25,7 +28,7 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
     for i in range(0, image_shape[0]):
         for j in range(0, image_shape[1]):
             p = []
-            for band in IMAGES.keys():
+            for band in bands:
                 image = IMAGES[band]
                 p.append(image[i, j])
 
@@ -54,6 +57,21 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
     ax.legend(custom_lines, ['Ice', 'Snow', 'Low Algae', 'High Algae', 'Water', 'Cryoconite'])
     plt.imshow(img)
     plt.title(title)
+
+    plt.xlabel("Longitude")
+    plt.ylabel("Latitude")
+    # [(45.892286764906586, 6.982004862263944), (45.925461654837385, 6.9147668470067005)]
+
+    Xcoord = numpy.linspace(coordinates[0][0], coordinates[1][0], img.size[0])
+    Xcoord = numpy.around(Xcoord, 4)
+    plt.xticks(range(0,img.size[0]), Xcoord)
+    plt.locator_params(axis='x', nbins=6)
+
+    Ycoord = numpy.linspace(coordinates[0][1], coordinates[1][1], img.size[1])
+    Ycoord = numpy.around(Ycoord, 4)
+    plt.yticks(range(0, img.size[1]), Ycoord)
+    plt.locator_params(axis='y', nbins=6)
+
     plt.savefig(os.path.join(os.getcwd(), output))
     plt.show()
 

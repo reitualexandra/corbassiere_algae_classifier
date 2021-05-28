@@ -122,6 +122,10 @@ def create_dataset(file=HCRF_FILE, savefig=True):
         plt.plot(xpoints, SN.values(), 'o:c', label="Snow")
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(labels)
+        plt.grid()
+        plt.xlabel("Sentinel-2 bands")
+        plt.ylabel("Albedo")
+        plt.title("Spectra of training data")
         plt.savefig(os.path.join(SAVEFIG_PATH, 'TrainingSpectra.png'))
 
 
