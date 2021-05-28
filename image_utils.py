@@ -13,11 +13,12 @@ You should also have the needed images downloaded locally.
 import os
 import glob
 from PIL import Image
-import numpy
 from numpy import asarray
 import cv2
 import inspect
 import datetime
+from osgeo import osr, ogr
+from osgeo import gdal
 
 
 BANDS = {
@@ -31,15 +32,10 @@ def log(msg):
     print("[{}][{}:{}:{}]: {}".format(caller, now.hour, now.minute, now.second, msg))
 
 
-def crop_images(img_source, img_destination, upper_left_x, upper_left_y, width, length):
+def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax):
+    coordinates = []
     if img_source is None:
         log("ERROR: No image source")
-        return 1
-    elif upper_left_x is None or upper_left_y is None:
-        log("ERROR: No upper left corner given")
-        return 1
-    elif width is None or length is None:
-        log("ERROR: Image dimensions not given")
         return 1
     else:
         if img_destination is None:
@@ -57,10 +53,9 @@ def crop_images(img_source, img_destination, upper_left_x, upper_left_y, width, 
 
             if img_name is not None:
                 log("Converting image {}".format(image))
-                cmd = "convert {} -crop {}x{}+{}+{} {}.{}".format(image, width, length,
-                                                                 upper_left_x, upper_left_y,
-                                                                 os.path.join(img_destination, str(img_name)), img_extension)
-                os.system(cmd)
+                bbox = (xmin, ymin, xmax, ymax)
+                gdal.Translate(os.path.join(img_destination, str(img_name) + "." + img_extension), image, projWin=bbox)
+
         return 0
 
 
@@ -85,7 +80,33 @@ def create_raster(source_dir):
         image_path = os.path.join(source_dir, "{}.{}".format(image_name, image_extension))
         image_data = normalize_image(image_path)
         IMAGES[band] = image_data
+        IMAGES["coordinates"] = img_corners(img=image_path)
+
     return IMAGES
+
+def utm32_latlon(pointX, pointY):
+    inputEPSG = 32632
+    outputEPSG = 4326
+    point = ogr.Geometry(ogr.wkbPoint)
+    point.AddPoint(pointX, pointY)
+    inSpatialRef = osr.SpatialReference()
+    inSpatialRef.ImportFromEPSG(inputEPSG)
+    outSpatialRef = osr.SpatialReference()
+    outSpatialRef.ImportFromEPSG(outputEPSG)
+    coordTransform = osr.CoordinateTransformation(inSpatialRef, outSpatialRef)
+    point.Transform(coordTransform)
+
+    return (point.GetX(), point.GetY())
+
+
+def img_corners(img):
+    src = gdal.Open(img, gdal.GA_ReadOnly)
+    ulx, xres, xskew, uly, yskew, yres = src.GetGeoTransform()
+    lrx = ulx + (src.RasterXSize * xres)
+    lry = uly + (src.RasterYSize * yres)
+
+    return [utm32_latlon(lrx, lry), utm32_latlon(ulx, uly)]
+
 
 """
 # USAGE EXAMPLE: 
@@ -97,3 +118,6 @@ crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20210429T161829_N0300
             img_destination="/Users/areitu/espace_bfea/Sentinel-2", upper_left_x=0, upper_left_y=0, width=5490, length=5490)
 create_raster(source_dir="/Users/areitu/espace_bfea/Sentinel-2/")
 """
+
+#crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20200718T102559_N9999_R108_T32TLR_20210517T190440.SAFE/GRANULE/L2A_T32TLR_A017580_20200718T103605/IMG_DATA/R20m/",
+#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/MerDeGlace", xmin=338327.25, ymin=5087868.95, xmax=343451.29, ymax=5084045.51)
