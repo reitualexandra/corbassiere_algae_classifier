@@ -60,7 +60,7 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax):
 
 
 def normalize_image(source_image, min_value=0, max_value=1):
-    img = Image.open("{}".format(source_image))
+    img = cv2.imread("{}".format(source_image), 0)
     numpy_img = asarray(img)
     numpy_img_normalized = cv2.normalize(numpy_img, None, min_value, max_value, cv2.NORM_MINMAX, dtype=cv2.CV_64F)
     return numpy_img_normalized
@@ -108,16 +108,11 @@ def img_corners(img):
     return [utm32_latlon(lrx, lry), utm32_latlon(ulx, uly)]
 
 
-"""
-# USAGE EXAMPLE: 
-
-crop_images(img_source="/Users/areitu/Desktop/S2A_MSIL2A_20200720T102031_N0214_R065_T32TMS_20200720T131523.SAFE/GRANULE/L2A_T32TMS_A026517_20200720T102636/IMG_DATA/R20m",
-            img_destination="/Users/areitu/espace_bfea/Sentinel-2", upper_left_x=900, upper_left_y=2100, width=700, length=1000)
-
-crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20210429T161829_N0300_R040_T21XWC_20210429T210017.SAFE/GRANULE/L2A_T21XWC_A021659_20210429T161824/IMG_DATA/R20m/",
-            img_destination="/Users/areitu/espace_bfea/Sentinel-2", upper_left_x=0, upper_left_y=0, width=5490, length=5490)
-create_raster(source_dir="/Users/areitu/espace_bfea/Sentinel-2/")
-"""
-
 #crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20200718T102559_N9999_R108_T32TLR_20210517T190440.SAFE/GRANULE/L2A_T32TLR_A017580_20200718T103605/IMG_DATA/R20m/",
 #            img_destination="/Users/areitu/espace_bfea/Sentinel-2/MerDeGlace", xmin=338327.25, ymin=5087868.95, xmax=343451.29, ymax=5084045.51)
+
+#crop_images(img_source="/Users/areitu/Downloads/S2A_MSIL2A_20200707T101031_N9999_R022_T33TUN_20210529T112354.SAFE/GRANULE/L2A_T33TUN_A026331_20200707T101405/IMG_DATA/R20m",
+#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Pasterze", xmin=324766.37, ymin=5218555.44, xmax=329318.48, ymax=5215457.10)
+
+#crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20200718T102559_N9999_R108_T32TMS_20210529T115725.SAFE/GRANULE/L2A_T32TMS_A017580_20200718T103605/IMG_DATA/R20m",
+#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Rhone", xmin=452190.56, ymin=5165781.54, xmax=455495.53, ymax=5161342.15)

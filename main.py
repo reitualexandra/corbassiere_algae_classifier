@@ -5,7 +5,6 @@ from matplotlib.lines import Line2D
 import image_utils
 import data_utils
 import os
-from image_utils import log
 
 
 def minimum_distance_classification(source_dir, output="Classification.png", title="Glacier Classification"):
@@ -60,7 +59,6 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
 
     plt.xlabel("Longitude")
     plt.ylabel("Latitude")
-    # [(45.892286764906586, 6.982004862263944), (45.925461654837385, 6.9147668470067005)]
 
     Xcoord = numpy.linspace(coordinates[0][0], coordinates[1][0], img.size[0])
     Xcoord = numpy.around(Xcoord, 4)
@@ -82,7 +80,13 @@ def main():
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Morteratsch"), output="Sentinel_Morteratsch.png")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Fiescher"), output="Fiescher.png")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Gorner"), output="Gorner.png")
-    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "MerDeGlace"), output="MerDeGlaceMe.png")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "MerDeGlace"), output="MerDeGlaceMe.png")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Pasterze"),
+    #                                output="Sentinel_Pasterze.png")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Rhone"),
+    #                                output="Sentinel_Rhone.png")
+    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Corbassiere"),
+                                    output="Sentinel_Corbassiere.png")
 
 
 if __name__ == "__main__":
