@@ -22,7 +22,7 @@ from osgeo import gdal
 
 
 BANDS = {
-    "Landsat": ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12"],
+    "Landsat": ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"],
     "Sentinel": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B8A", "B09", "B10", "B11", "B12"]
 }
 
@@ -32,9 +32,10 @@ def log(msg):
     print("[{}][{}:{}:{}]: {}".format(caller, now.hour, now.minute, now.second, msg))
 
 
-def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax):
-    import signal
-    signal.signal(signal.SIGSEGV, signal.SIG_IGN)
+def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax, mission="sentinel2"):
+    band_list = BANDS["Sentinel"]
+    if mission=="landsat8":
+        band_list = BANDS["Landsat"]
     if img_source is None:
         log("ERROR: No image source")
         return 1
@@ -46,7 +47,7 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax):
         for image in glob.glob(os.path.join(img_source, "*")):
             img_extension = image.split(".")[-1]
             try:
-                img_names = [x for x in BANDS['Sentinel'] + BANDS["Landsat"] if x in image]
+                img_names = [x for x in band_list if x in image]
                 img_name = max(img_names, key=len)
                 img_name = int(''.join(c for c in img_name if c.isdigit()))
             except ValueError:
@@ -54,8 +55,11 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax):
 
             if img_name is not None:
                 log("Converting image {}".format(image))
-                bbox = (xmin, ymin, xmax, ymax)
-                gdal.Translate(os.path.join(img_destination, str(img_name) + "." + img_extension), image, projWin=bbox)
+                options = "-projwin {} {} {} {} -of JP2OpenJPEG".format(xmin, ymin, xmax, ymax)
+                output = os.path.join(img_destination, str(img_name) + ".jp2")
+                cmd = "gdal_translate {} {} {}".format(options, image, output)
+                os.system(cmd)
+                os.system("rm -f {}/*.xml".format(img_destination))
 
         return 0
 
