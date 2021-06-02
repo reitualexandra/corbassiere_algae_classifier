@@ -7,19 +7,34 @@ import data_utils
 import os
 
 
-def minimum_distance_classification(source_dir, output="Classification.png", title="Glacier Classification"):
+def minimum_distance_classification(source_dir, output="Classification.png", title="Glacier Classification", mission="sentinel2"):
     data_utils.create_dataset(file=data_utils.HCRF_FILE, savefig=True)
     IMAGES = image_utils.create_raster(source_dir)
     bands = list(IMAGES.keys())
     bands.remove("coordinates")
     coordinates = IMAGES["coordinates"]
 
-    CI = [data_utils.CI[x] for x in bands]
-    SN = [data_utils.SN[x] for x in bands]
-    LA = [data_utils.LA[x] for x in bands]
-    HA = [data_utils.HA[x] for x in bands]
-    WAT = [data_utils.WAT[x] for x in bands]
-    CC = [data_utils.CC[x] for x in bands]
+    if mission=="landsat8":
+        CI = [data_utils.CI_L8[x] for x in bands]
+        SN = [data_utils.SN_L8[x] for x in bands]
+        LA = [data_utils.LA_L8[x] for x in bands]
+        HA = [data_utils.HA_L8[x] for x in bands]
+        WAT = [data_utils.WAT_L8[x] for x in bands]
+        CC = [data_utils.CC_L8[x] for x in bands]
+    elif mission=="landsat7":
+        CI = [data_utils.CI_L7[x] for x in bands]
+        SN = [data_utils.SN_L7[x] for x in bands]
+        LA = [data_utils.LA_L7[x] for x in bands]
+        HA = [data_utils.HA_L7[x] for x in bands]
+        WAT = [data_utils.WAT_L7[x] for x in bands]
+        CC = [data_utils.CC_L7[x] for x in bands]
+    else:
+        CI = [data_utils.CI[x] for x in bands]
+        SN = [data_utils.SN[x] for x in bands]
+        LA = [data_utils.LA[x] for x in bands]
+        HA = [data_utils.HA[x] for x in bands]
+        WAT = [data_utils.WAT[x] for x in bands]
+        CC = [data_utils.CC[x] for x in bands]
 
     image_shape = numpy.shape(list(IMAGES.items())[0][1])
     MAP_DATA = numpy.zeros([image_shape[0], image_shape[1], 3], dtype=numpy.uint8)
@@ -32,12 +47,14 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
                 p.append(image[i, j])
 
             p = numpy.array(p)
+            if p.ndim > 1:
+                p = p[:, 1]
             d_CI = numpy.linalg.norm(p - numpy.array(CI))
             d_SN = numpy.linalg.norm(p - numpy.array(SN))
             d_LA = numpy.linalg.norm(p - numpy.array(LA))
             d_HA = numpy.linalg.norm(p - numpy.array(HA))
-            d_WAT = numpy.linalg.norm(p - WAT)
-            d_CC = numpy.linalg.norm(p - CC)
+            d_WAT = numpy.linalg.norm(p - numpy.array(WAT))
+            d_CC = numpy.linalg.norm(p - numpy.array(CC))
             distances = [d_CI, d_SN, d_LA, d_HA, d_WAT, d_CC]
 
             MAP_DATA[i, j] = data_utils.COLORS[distances.index(min(distances)) + 1]
@@ -81,12 +98,12 @@ def main():
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Fiescher"), output="Fiescher.png")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Gorner"), output="Gorner.png")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "MerDeGlace"), output="MerDeGlaceMe.png")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Pasterze"),
-    #                                output="Sentinel_Pasterze.png")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Rhone"),
-    #                                output="Sentinel_Rhone.png")
-    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Corbassiere"),
-                                    output="Sentinel_Corbassiere.png")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Pasterze"), output="Sentinel_Pasterze.png")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Rhone"), output="Sentinel_Rhone.png")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Greenland"),
+    #                                output="Greenland_Landsat.png", mission="landsat8")
+    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-7", "Corbassiere"),
+                                    output="Corbassiere_Landsat7.png", mission="landsat7")
 
 
 if __name__ == "__main__":

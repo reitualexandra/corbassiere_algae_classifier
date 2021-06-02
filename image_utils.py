@@ -22,7 +22,8 @@ from osgeo import gdal
 
 
 BANDS = {
-    "Landsat": ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12"],
+    "Landsat8": ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"],
+    "Landsat7": ["B1", "B2", "B3", "B4", "B5", "B8"],
     "Sentinel": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B8A", "B09", "B10", "B11", "B12"]
 }
 
@@ -32,8 +33,12 @@ def log(msg):
     print("[{}][{}:{}:{}]: {}".format(caller, now.hour, now.minute, now.second, msg))
 
 
-def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax):
-    coordinates = []
+def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax, mission="sentinel2"):
+    band_list = BANDS["Sentinel"]
+    if mission=="landsat8":
+        band_list = BANDS["Landsat8"]
+    elif mission=="landsat7":
+        band_list = BANDS["Landsat7"]
     if img_source is None:
         log("ERROR: No image source")
         return 1
@@ -43,9 +48,8 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax):
         os.makedirs(img_destination, exist_ok=True)
 
         for image in glob.glob(os.path.join(img_source, "*")):
-            img_extension = image.split(".")[-1]
             try:
-                img_names = [x for x in BANDS['Sentinel'] + BANDS["Landsat"] if x in image]
+                img_names = [x for x in band_list if x in image]
                 img_name = max(img_names, key=len)
                 img_name = int(''.join(c for c in img_name if c.isdigit()))
             except ValueError:
@@ -53,14 +57,17 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax):
 
             if img_name is not None:
                 log("Converting image {}".format(image))
-                bbox = (xmin, ymin, xmax, ymax)
-                gdal.Translate(os.path.join(img_destination, str(img_name) + "." + img_extension), image, projWin=bbox)
+                options = "-projwin {} {} {} {} -of JP2OpenJPEG".format(xmin, ymin, xmax, ymax)
+                output = os.path.join(img_destination, str(img_name) + ".jp2")
+                cmd = "gdal_translate {} {} {}".format(options, image, output)
+                os.system(cmd)
+                os.system("rm -f {}/*.xml".format(img_destination))
 
         return 0
 
 
 def normalize_image(source_image, min_value=0, max_value=1):
-    img = cv2.imread("{}".format(source_image), 0)
+    img = cv2.imread("{}".format(source_image))
     numpy_img = asarray(img)
     numpy_img_normalized = cv2.normalize(numpy_img, None, min_value, max_value, cv2.NORM_MINMAX, dtype=cv2.CV_64F)
     return numpy_img_normalized
@@ -116,3 +123,13 @@ def img_corners(img):
 
 #crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20200718T102559_N9999_R108_T32TMS_20210529T115725.SAFE/GRANULE/L2A_T32TMS_A017580_20200718T103605/IMG_DATA/R20m",
 #            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Rhone", xmin=452190.56, ymin=5165781.54, xmax=455495.53, ymax=5161342.15)
+
+#crop_images(img_source="/Users/areitu/Downloads/LC08_L2SP_007013_20170814_20200903_02_T1",
+#            img_destination="/Users/areitu/espace_bfea/Landsat-8/Greenland",
+#            xmin=500000, ymin=7499941, xmax=614215, ymax=7392608, mission="landsat8")
+#crop_images(img_source="/Users/areitu/Downloads/S2A_MSIL2A_20170809T145921_N9999_R125_T22WEV_20210602T172205.SAFE/GRANULE/L2A_T22WEV_A011133_20170809T150205/IMG_DATA/R60m",
+#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Greenland",
+#            xmin=500000, ymin=7499941, xmax=614215, ymax=7392608, mission="sentinel2")
+#crop_images(img_source="/Users/areitu/Downloads/LE07_L2SP_195028_20100707_20200911_02_T1",
+#            img_destination="/Users/areitu/espace_bfea/Landsat-7/Corbassiere",
+#            xmin=364494.16, ymin=5095536.32, xmax=370548.91, ymax=5088737.01, mission="landsat7")
