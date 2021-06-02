@@ -21,6 +21,13 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
         HA = [data_utils.HA_L8[x] for x in bands]
         WAT = [data_utils.WAT_L8[x] for x in bands]
         CC = [data_utils.CC_L8[x] for x in bands]
+    elif mission=="landsat7":
+        CI = [data_utils.CI_L7[x] for x in bands]
+        SN = [data_utils.SN_L7[x] for x in bands]
+        LA = [data_utils.LA_L7[x] for x in bands]
+        HA = [data_utils.HA_L7[x] for x in bands]
+        WAT = [data_utils.WAT_L7[x] for x in bands]
+        CC = [data_utils.CC_L7[x] for x in bands]
     else:
         CI = [data_utils.CI[x] for x in bands]
         SN = [data_utils.SN[x] for x in bands]

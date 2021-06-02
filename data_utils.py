@@ -21,6 +21,13 @@ CC_L8 = {}
 WAT_L8 = {}
 SN_L8 = {}
 
+HA_L7 = {}
+LA_L7 = {}
+CI_L7 = {}
+CC_L7 = {}
+WAT_L7 = {}
+SN_L7 = {}
+
 BANDS = {
     1: [433, 453],
     2: [457, 522],
@@ -47,6 +54,33 @@ BANDS_LANDSAT_8 = {
     8: [500, 680],
     9: [1360, 1380]
 }
+
+BANDS_LANDSAT_7 = {
+    1: [450, 520],
+    2: [520, 600],
+    3: [630, 690],
+    4: [770, 900],
+    5: [1550, 1750],
+    8: [520, 900]
+}
+
+def plot_training_spectra(BANDS, HA, LA, CI, CC, WAT, SN, mission="Sentinel2"):
+    ax = plt.subplot(1, 1, 1)
+    xpoints = BANDS.keys()
+    plt.plot(xpoints, HA.values(), 'o:g', label="High Algae")
+    plt.plot(xpoints, LA.values(), 'o:y', label="Low Algae")
+    plt.plot(xpoints, CI.values(), 'o:b', label="Clean Ice")
+    plt.plot(xpoints, CC.values(), 'o:m', label="Cryoconite")
+    plt.plot(xpoints, WAT.values(), 'o:k', label="Water")
+    plt.plot(xpoints, SN.values(), 'o:c', label="Snow")
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(labels)
+    plt.grid()
+    plt.xlabel("{} bands".format(mission))
+    plt.ylabel("Albedo")
+    plt.title("Spectra of training data")
+    plt.savefig(os.path.join(SAVEFIG_PATH, 'TrainingSpectra{}.png'.format(mission)))
+    plt.close()
 
 def create_dataset(file=HCRF_FILE, savefig=True):
     hcrf_master = pd.read_csv(file)
@@ -141,41 +175,23 @@ def create_dataset(file=HCRF_FILE, savefig=True):
         WAT_L8[band] = WAT_hcrf[min_l8_index:max_l8_index].mean(axis='columns').mean(axis='index').astype(np.float64)
         SN_L8[band] = SN_hcrf[min_l8_index:max_l8_index].mean(axis='columns').mean(axis='index').astype(np.float64)
 
+    for band in BANDS_LANDSAT_7.keys():
+        min_l7_index = BANDS_LANDSAT_8[band][0] - 350
+        max_l7_index = BANDS_LANDSAT_8[band][1] - 350
+
+        HA_L7[band] = HA_hcrf[min_l7_index:max_l7_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        LA_L7[band] = LA_hcrf[min_l7_index:max_l7_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        CI_L7[band] = CI_hcrf[min_l7_index:max_l7_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        CC_L7[band] = CC_hcrf[min_l7_index:max_l7_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        WAT_L7[band] = WAT_hcrf[min_l7_index:max_l7_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        SN_L7[band] = SN_hcrf[min_l7_index:max_l7_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+
 
     if savefig:
-        ax = plt.subplot(1, 1, 1)
-        xpoints = BANDS.keys()
-        plt.plot(xpoints, HA.values(), 'o:g', label="High Algae")
-        plt.plot(xpoints, LA.values(), 'o:y', label="Low Algae")
-        plt.plot(xpoints, CI.values(), 'o:b', label="Clean Ice")
-        plt.plot(xpoints, CC.values(), 'o:m', label="Cryoconite")
-        plt.plot(xpoints, WAT.values(), 'o:k', label="Water")
-        plt.plot(xpoints, SN.values(), 'o:c', label="Snow")
-        handles, labels = ax.get_legend_handles_labels()
-        ax.legend(labels)
-        plt.grid()
-        plt.xlabel("Sentinel-2 bands")
-        plt.ylabel("Albedo")
-        plt.title("Spectra of training data")
-        plt.savefig(os.path.join(SAVEFIG_PATH, 'TrainingSpectraSentinel2.png'))
-        plt.close()
+        plot_training_spectra(BANDS, HA, LA, CI, CC, WAT, SN, mission="Sentinel2")
+        plot_training_spectra(BANDS_LANDSAT_8, HA_L8, LA_L8, CI_L8, CC_L8, WAT_L8, SN_L8, mission="Landsat8")
+        plot_training_spectra(BANDS_LANDSAT_7, HA_L7, LA_L7, CI_L7, CC_L7, WAT_L7, SN_L7, mission="Landsat7")
 
-        ax = plt.subplot(1, 1, 1)
-        xpoints = BANDS_LANDSAT_8.keys()
-        plt.plot(xpoints, HA_L8.values(), 'o:g', label="High Algae")
-        plt.plot(xpoints, LA_L8.values(), 'o:y', label="Low Algae")
-        plt.plot(xpoints, CI_L8.values(), 'o:b', label="Clean Ice")
-        plt.plot(xpoints, CC_L8.values(), 'o:m', label="Cryoconite")
-        plt.plot(xpoints, WAT_L8.values(), 'o:k', label="Water")
-        plt.plot(xpoints, SN_L8.values(), 'o:c', label="Snow")
-        handles, labels = ax.get_legend_handles_labels()
-        ax.legend(labels)
-        plt.grid()
-        plt.xlabel("SLandsat-8 bands")
-        plt.ylabel("Albedo")
-        plt.title("Spectra of training data")
-        plt.savefig(os.path.join(SAVEFIG_PATH, 'TrainingSpectraLandsat8.png'))
-        plt.close()
 
 COLORS = {
     1: [135, 206, 250], # BLUE - ICE

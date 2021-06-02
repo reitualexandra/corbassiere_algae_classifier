@@ -22,7 +22,8 @@ from osgeo import gdal
 
 
 BANDS = {
-    "Landsat": ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"],
+    "Landsat8": ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"],
+    "Landsat7": ["B1", "B2", "B3", "B4", "B5", "B8"],
     "Sentinel": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B8A", "B09", "B10", "B11", "B12"]
 }
 
@@ -35,7 +36,9 @@ def log(msg):
 def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax, mission="sentinel2"):
     band_list = BANDS["Sentinel"]
     if mission=="landsat8":
-        band_list = BANDS["Landsat"]
+        band_list = BANDS["Landsat8"]
+    elif mission=="landsat7":
+        band_list = BANDS["Landsat7"]
     if img_source is None:
         log("ERROR: No image source")
         return 1
@@ -45,7 +48,6 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax, mission="se
         os.makedirs(img_destination, exist_ok=True)
 
         for image in glob.glob(os.path.join(img_source, "*")):
-            img_extension = image.split(".")[-1]
             try:
                 img_names = [x for x in band_list if x in image]
                 img_name = max(img_names, key=len)
