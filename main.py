@@ -100,8 +100,10 @@ def main():
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "MerDeGlace"), output="MerDeGlaceMe.png")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Pasterze"), output="Sentinel_Pasterze.png")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Rhone"), output="Sentinel_Rhone.png")
-    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat8", "Greenland"),
-                                    output="Greenland_Landsat.png", mission="landsat8")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Greenland"),
+    #                                output="Greenland_Landsat.png", mission="landsat8")
+    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-7", "Corbassiere"),
+                                    output="Corbassiere_Landsat7.png", mission="landsat7")
 
 
 if __name__ == "__main__":

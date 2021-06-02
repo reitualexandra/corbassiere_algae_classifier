@@ -124,5 +124,12 @@ def img_corners(img):
 #crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20200718T102559_N9999_R108_T32TMS_20210529T115725.SAFE/GRANULE/L2A_T32TMS_A017580_20200718T103605/IMG_DATA/R20m",
 #            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Rhone", xmin=452190.56, ymin=5165781.54, xmax=455495.53, ymax=5161342.15)
 
-#crop_images(img_source="/Users/areitu/Downloads/LC08_L2SP_007013_20200705_20200913_02_T1/",
-#            img_destination="/Users/areitu/espace_bfea/Landsat8/Greenland", xmin=500000, ymin=7499941, xmax=614215, ymax=7392608)
+#crop_images(img_source="/Users/areitu/Downloads/LC08_L2SP_007013_20170814_20200903_02_T1",
+#            img_destination="/Users/areitu/espace_bfea/Landsat-8/Greenland",
+#            xmin=500000, ymin=7499941, xmax=614215, ymax=7392608, mission="landsat8")
+#crop_images(img_source="/Users/areitu/Downloads/S2A_MSIL2A_20170809T145921_N9999_R125_T22WEV_20210602T172205.SAFE/GRANULE/L2A_T22WEV_A011133_20170809T150205/IMG_DATA/R60m",
+#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Greenland",
+#            xmin=500000, ymin=7499941, xmax=614215, ymax=7392608, mission="sentinel2")
+#crop_images(img_source="/Users/areitu/Downloads/LE07_L2SP_195028_20100707_20200911_02_T1",
+#            img_destination="/Users/areitu/espace_bfea/Landsat-7/Corbassiere",
+#            xmin=364494.16, ymin=5095536.32, xmax=370548.91, ymax=5088737.01, mission="landsat7")
