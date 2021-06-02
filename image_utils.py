@@ -33,7 +33,8 @@ def log(msg):
 
 
 def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax):
-    coordinates = []
+    import signal
+    signal.signal(signal.SIGSEGV, signal.SIG_IGN)
     if img_source is None:
         log("ERROR: No image source")
         return 1
@@ -60,7 +61,7 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax):
 
 
 def normalize_image(source_image, min_value=0, max_value=1):
-    img = cv2.imread("{}".format(source_image), 0)
+    img = cv2.imread("{}".format(source_image))
     numpy_img = asarray(img)
     numpy_img_normalized = cv2.normalize(numpy_img, None, min_value, max_value, cv2.NORM_MINMAX, dtype=cv2.CV_64F)
     return numpy_img_normalized
@@ -116,3 +117,6 @@ def img_corners(img):
 
 #crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20200718T102559_N9999_R108_T32TMS_20210529T115725.SAFE/GRANULE/L2A_T32TMS_A017580_20200718T103605/IMG_DATA/R20m",
 #            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Rhone", xmin=452190.56, ymin=5165781.54, xmax=455495.53, ymax=5161342.15)
+
+#crop_images(img_source="/Users/areitu/Downloads/LC08_L2SP_007013_20200705_20200913_02_T1/",
+#            img_destination="/Users/areitu/espace_bfea/Landsat8/Greenland", xmin=500000, ymin=7499941, xmax=614215, ymax=7392608)
