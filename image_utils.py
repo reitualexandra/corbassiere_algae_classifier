@@ -46,6 +46,7 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax, mission="se
         if img_destination is None:
             img_destination = os.path.dirname(os.path.realpath(__file__))
         os.makedirs(img_destination, exist_ok=True)
+        os.makedirs(img_destination + "_cropped", exist_ok=True)
 
         for image in glob.glob(os.path.join(img_source, "*")):
             try:
@@ -58,10 +59,16 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax, mission="se
             if img_name is not None:
                 log("Converting image {}".format(image))
                 options = "-projwin {} {} {} {} -of JP2OpenJPEG".format(xmin, ymin, xmax, ymax)
-                output = os.path.join(img_destination, str(img_name) + ".jp2")
-                cmd = "gdal_translate {} {} {}".format(options, image, output)
+                output_cropped = os.path.join(img_destination + "_cropped", str(img_name) + ".jp2")
+                cmd = "gdal_translate {} {} {}".format(options, image, output_cropped)
                 os.system(cmd)
                 os.system("rm -f {}/*.xml".format(img_destination))
+
+                output_masked = os.path.join(img_destination, str(img_name) + ".jp2")
+                cmd = "gdalwarp {} {} -cutline mask.gpkg -crop_to_cutline".format(image, output_masked)
+                os.system(cmd)
+                os.system(cmd)
+                os.system("rm -f {}/*.xml".format(img_destination + "_cropped"))
 
         return 0
 
@@ -115,21 +122,15 @@ def img_corners(img):
     return [utm32_latlon(lrx, lry), utm32_latlon(ulx, uly)]
 
 
-#crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20200718T102559_N9999_R108_T32TLR_20210517T190440.SAFE/GRANULE/L2A_T32TLR_A017580_20200718T103605/IMG_DATA/R20m/",
-#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/MerDeGlace", xmin=338327.25, ymin=5087868.95, xmax=343451.29, ymax=5084045.51)
-
-#crop_images(img_source="/Users/areitu/Downloads/S2A_MSIL2A_20200707T101031_N9999_R022_T33TUN_20210529T112354.SAFE/GRANULE/L2A_T33TUN_A026331_20200707T101405/IMG_DATA/R20m",
-#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Pasterze", xmin=324766.37, ymin=5218555.44, xmax=329318.48, ymax=5215457.10)
-
-#crop_images(img_source="/Users/areitu/Downloads/S2B_MSIL2A_20200718T102559_N9999_R108_T32TMS_20210529T115725.SAFE/GRANULE/L2A_T32TMS_A017580_20200718T103605/IMG_DATA/R20m",
-#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Rhone", xmin=452190.56, ymin=5165781.54, xmax=455495.53, ymax=5161342.15)
-
 #crop_images(img_source="/Users/areitu/Downloads/LC08_L2SP_007013_20170814_20200903_02_T1",
 #            img_destination="/Users/areitu/espace_bfea/Landsat-8/Greenland",
 #            xmin=500000, ymin=7499941, xmax=614215, ymax=7392608, mission="landsat8")
 #crop_images(img_source="/Users/areitu/Downloads/S2A_MSIL2A_20170809T145921_N9999_R125_T22WEV_20210602T172205.SAFE/GRANULE/L2A_T22WEV_A011133_20170809T150205/IMG_DATA/R60m",
 #            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Greenland",
 #            xmin=500000, ymin=7499941, xmax=614215, ymax=7392608, mission="sentinel2")
+#crop_images(img_source="/Users/areitu/Downloads/S2A_MSIL2A_20210519T103021_N9999_R108_T32TLR_20210605T145903.SAFE/GRANULE/L2A_T32TLR_A030850_20210519T103413/IMG_DATA/R10m",
+#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Corbassiere",
+#            xmin=364090.59, ymin=5096444.81, xmax=370806.25, ymax=5089472.68, mission="sentinel2")
 #crop_images(img_source="/Users/areitu/Downloads/LE07_L2SP_195028_20100707_20200911_02_T1",
 #            img_destination="/Users/areitu/espace_bfea/Landsat-7/Corbassiere",
-#            xmin=364494.16, ymin=5095536.32, xmax=370548.91, ymax=5088737.01, mission="landsat7")
+#            xmin=364090.59, ymin=5096444.81, xmax=370806.25, ymax=5089472.68, mission="landsat7")
