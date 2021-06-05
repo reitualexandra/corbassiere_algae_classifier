@@ -70,7 +70,7 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
                     Line2D([0], [0], color="black", lw=4)]
 
     fig, ax = plt.subplots()
-    ax.legend(custom_lines, ['Ice', 'Snow', 'Low Algae', 'High Algae', 'Water', 'Cryoconite'])
+    ax.legend(custom_lines, ['Ice', 'Snow', 'Low Algae', 'High Algae', 'Water', 'Cryoconite'], bbox_to_anchor=(1.8, 1))
     plt.imshow(img)
     plt.title(title)
 
@@ -79,29 +79,23 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
 
     Xcoord = numpy.linspace(coordinates[0][0], coordinates[1][0], img.size[0])
     Xcoord = numpy.around(Xcoord, 4)
-    plt.xticks(range(0,img.size[0]), Xcoord)
-    plt.locator_params(axis='x', nbins=6)
+    plt.xticks(range(0, img.size[0]), Xcoord)
+    plt.locator_params(axis='x', nbins=3)
 
     Ycoord = numpy.linspace(coordinates[0][1], coordinates[1][1], img.size[1])
     Ycoord = numpy.around(Ycoord, 4)
     plt.yticks(range(0, img.size[1]), Ycoord)
-    plt.locator_params(axis='y', nbins=6)
+    plt.locator_params(axis='y', nbins=3)
 
     plt.savefig(os.path.join(os.getcwd(), output))
     plt.show()
 
 
 def main():
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Greenland"), output="Sentinel_Greenland.png")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Aletsch"), output="Sentinel_Aletsch.png")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Morteratsch"), output="Sentinel_Morteratsch.png")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Fiescher"), output="Fiescher.png")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Gorner"), output="Gorner.png")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "MerDeGlace"), output="MerDeGlaceMe.png")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Pasterze"), output="Sentinel_Pasterze.png")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Rhone"), output="Sentinel_Rhone.png")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Greenland"),
     #                                output="Greenland_Landsat.png", mission="landsat8")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Corbassiere"),
+    #                                output="Corbassiere_Sentinel2.png", mission="sentinel2")
     minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-7", "Corbassiere"),
                                     output="Corbassiere_Landsat7.png", mission="landsat7")
 
