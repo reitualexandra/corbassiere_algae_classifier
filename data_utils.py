@@ -190,8 +190,8 @@ def create_dataset(file=HCRF_FILE, savefig=True):
         SN_L8[band] = SN_hcrf[min_l8_index:max_l8_index].mean(axis='columns').mean(axis='index').astype(np.float64)
 
     for band in BANDS_LANDSAT_7.keys():
-        min_l7_index = BANDS_LANDSAT_8[band][0] - 350
-        max_l7_index = BANDS_LANDSAT_8[band][1] - 350
+        min_l7_index = BANDS_LANDSAT_7[band][0] - 350
+        max_l7_index = BANDS_LANDSAT_7[band][1] - 350
 
         HA_L7[band] = HA_hcrf[min_l7_index:max_l7_index].mean(axis='columns').mean(axis='index').astype(np.float64)
         LA_L7[band] = LA_hcrf[min_l7_index:max_l7_index].mean(axis='columns').mean(axis='index').astype(np.float64)
