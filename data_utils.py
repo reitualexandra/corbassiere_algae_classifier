@@ -1,3 +1,10 @@
+"""
+This module contains a set of functions that parse the training data set and
+compute the centers for the data clusters.
+Here you will also find dictionaries contatining Sentinel2 and Landsat7/8
+bands, as well as distionaries containing the mean values for each class.
+"""
+
 import numpy as np
 import pandas as pd
 import os

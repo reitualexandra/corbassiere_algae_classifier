@@ -1,3 +1,8 @@
+"""
+This module applies a minimum distance classification on the pre-processed and cropped images.
+This should output a classified map of the Corbassiere glacier.
+"""
+
 from PIL import Image
 import numpy
 import matplotlib.pyplot as plt

@@ -1,18 +1,12 @@
 """
-This file contains python functions that crop an image to the wanted dimensions.
-Modules needed to run these functions:
-    Commandline module:
-    - imagemagik - download from https://imagemagick.org/script/download.php
-    Python modules:
-    - numpy - pip3 install numpy
-    - PIL - pip3 install numpy
-
-You should also have the needed images downloaded locally.
+This module contains a few functions for image pre-processing.
+Here you will find a function for cropping/ masking images, as well as
+functions used to create normalized images or translate the corner
+coordinates for cropping.
 """
 
 import os
 import glob
-from PIL import Image
 from numpy import asarray
 import cv2
 import inspect
