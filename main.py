@@ -1,3 +1,8 @@
+"""
+This module applies a minimum distance classification on the pre-processed and cropped images.
+This should output a classified map of the Corbassiere glacier.
+"""
+
 from PIL import Image
 import numpy
 import matplotlib.pyplot as plt
@@ -65,7 +70,7 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
                 nr_pixels[distances.index(min(distances)) + 1] += 1
 
     img = Image.fromarray(MAP_DATA, 'RGB')
-    img.save(output)
+    img.save(output + ".png")
 
     custom_lines = [Line2D([0], [0], color="lightskyblue", lw=4),
                     Line2D([0], [0], color="white", lw=4),
@@ -97,17 +102,17 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
     plt.yticks(range(0, img.size[1]), Ycoord)
     plt.locator_params(axis='y', nbins=6)
 
-    plt.savefig(os.path.join(os.getcwd(), output))
+    plt.savefig(os.path.join(os.getcwd(), output + "_figure.png"))
     plt.show()
 
 
 def main():
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Greenland"),
-    #                                output="Greenland_Landsat.png", mission="landsat8")
+    #                                output="Greenland_Landsat", mission="landsat8")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Corbassiere"),
-    #                               output="Corbassiere_Sentinel2.png", mission="sentinel2")
+    #                               output="Corbassiere_Sentinel2", mission="sentinel2")
     minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-7", "Corbassiere"),
-                                    output="Corbassiere_Landsat7.png", mission="landsat7")
+                                    output="Corbassiere_Landsat7", mission="landsat7")
 
 
 if __name__ == "__main__":
