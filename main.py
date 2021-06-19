@@ -21,12 +21,11 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
     nr_pixels = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
 
     if mission=="landsat8":
-        k = 1.3
+        k = 1.4
         CI = [k*data_utils.CI_L8[x] for x in bands]
         SN = [k*data_utils.SN_L8[x] for x in bands]
         LA = [k*data_utils.LA_L8[x] for x in bands]
         HA = [k*data_utils.HA_L8[x] for x in bands]
-        WAT = [k*data_utils.WAT_L8[x] for x in bands]
         CC = [k*data_utils.CC_L8[x] for x in bands]
     elif  mission=="landsat7":
         k = 1.3
@@ -34,14 +33,12 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
         SN = [k * data_utils.SN_L7[x] for x in bands]
         LA = [k * data_utils.LA_L7[x] for x in bands]
         HA = [k * data_utils.HA_L7[x] for x in bands]
-        WAT = [k * data_utils.WAT_L7[x] for x in bands]
         CC = [k * data_utils.CC_L7[x] for x in bands]
     else:
         CI = [data_utils.CI[x] for x in bands]
         SN = [data_utils.SN[x] for x in bands]
         LA = [data_utils.LA[x] for x in bands]
         HA = [data_utils.HA[x] for x in bands]
-        WAT = [data_utils.WAT[x] for x in bands]
         CC = [data_utils.CC[x] for x in bands]
 
     image_shape = numpy.shape(list(IMAGES.items())[0][1])
@@ -57,16 +54,14 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
             p = numpy.array(p)
             if p.ndim > 1:
                 p = p[:, 1]
-            if False: #numpy.all(p==0):
-                MAP_DATA[i, j] = data_utils.COLORS[7]
+            if numpy.all(p==0):
+                MAP_DATA[i, j] = data_utils.COLORS[6]
             else:
                 d_CI = numpy.linalg.norm(p - numpy.array(CI))
                 d_SN = numpy.linalg.norm(p - numpy.array(SN))
                 d_LA = numpy.linalg.norm(p - numpy.array(LA))
                 d_HA = numpy.linalg.norm(p - numpy.array(HA))
-                #d_WAT = numpy.linalg.norm(p - numpy.array(WAT))
                 d_CC = numpy.linalg.norm(p - numpy.array(CC))
-                #distances = [d_CI, d_SN, d_LA, d_HA, d_WAT, d_CC]
                 distances = [d_CI, d_SN, d_LA, d_HA, d_CC]
 
                 MAP_DATA[i, j] = data_utils.COLORS[distances.index(min(distances)) + 1]
@@ -79,7 +74,6 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
                     Line2D([0], [0], color="white", lw=4),
                     Line2D([0], [0], color="mediumseagreen", lw=4),
                     Line2D([0], [0], color="darkgreen", lw=4),
-                    #Line2D([0], [0], color="royalblue", lw=4),
                     Line2D([0], [0], color="black", lw=4)]
 
     fig, ax = plt.subplots(figsize=(12, 6))
@@ -87,7 +81,6 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
                              'Snow ({} pixels)'.format(nr_pixels[2]),
                              'Low Algae ({} pixels)'.format(nr_pixels[3]),
                              'High Algae ({} pixels)'.format(nr_pixels[4]),
-                             #'Water ({} pixels)'.format(nr_pixels[5]),
                              'Cryoconite ({} pixels)'.format(nr_pixels[5])], bbox_to_anchor=(2.3, 1), facecolor="lightgrey")
     plt.imshow(img)
     plt.title(title)
@@ -114,8 +107,8 @@ def main():
     #                                output="Greenland_Landsat", mission="landsat8")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Greenland"),
     #                               output="Greenland_Sentinel2", mission="sentinel2")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Corbassiere_cropped"),
-    #                               output="Corbassiere_Sentinel2", mission="sentinel2")
+    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Corbassiere"),
+                                   output="Corbassiere_Sentinel2", mission="sentinel2")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-7", "Greenland"),
     #                                output="Greenland_Landsat7", mission="landsat7")
 
