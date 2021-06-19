@@ -68,6 +68,7 @@ BANDS_LANDSAT_7 = {
     3: [630, 690],
     4: [770, 900],
     5: [1550, 1750],
+    7: [2064, 2354],
     8: [520, 900]
 }
 
@@ -212,7 +213,7 @@ COLORS = {
     2: [255, 255, 255], # WHITE - SNOW
     3: [60, 179, 113], # LIGHT GREEN - ALGAE_LOW
     4: [0, 100, 0], # DARK GREEN - ALGAE_HIGH
-    5: [65, 105, 225], # WATER
-    6: [0, 0, 0], #CRYOCONITE
-    7: [211, 211, 211] #OUTSIDE SNOW/ICE AREA
+    #5: [65, 105, 225], # WATER
+    5: [0, 0, 0], #CRYOCONITE
+    6: [211, 211, 211] #OUTSIDE SNOW/ICE AREA
 }

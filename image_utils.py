@@ -17,8 +17,8 @@ from osgeo import gdal
 
 BANDS = {
     "Landsat8": ["B1.", "B2.", "B3.", "B4.", "B5.", "B6.", "B7.", "B8.", "B9."],
-    "Landsat7": ["B1.", "B2.", "B3.", "B4.", "B5.", "B8."],
-    "Sentinel": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B8A", "B09", "B10", "B11", "B12"]
+    "Landsat7": ["B1.", "B2.", "B3.", "B4.", "B5.", "B7.", "B8."],
+    "Sentinel": ["B01", "B02", "B03"]#, "B04", "B05", "B06", "B07", "B8A", "B09", "B10", "B11", "B12"]
 }
 
 def log(msg):
@@ -118,7 +118,7 @@ def img_corners(img):
 
 #crop_images(img_source="/Users/areitu/Downloads/LC08_L2SP_007013_20170814_20200903_02_T1",
 #            img_destination="/Users/areitu/espace_bfea/Landsat-8/Greenland",
-#            xmin=500000, ymin=7499941, xmax=614215, ymax=7392608, mission="landsat8")
+#            xmin=500000, ymin=7499941, xmax=610000, ymax=7392608, mission="landsat8")
 #crop_images(img_source="/Users/areitu/Downloads/S2A_MSIL2A_20170809T145921_N9999_R125_T22WEV_20210602T172205.SAFE/GRANULE/L2A_T22WEV_A011133_20170809T150205/IMG_DATA/R60m",
 #            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Greenland",
 #            xmin=500000, ymin=7499941, xmax=614215, ymax=7392608, mission="sentinel2")
