@@ -21,14 +21,14 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
     nr_pixels = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
 
     if mission=="landsat8":
-        k = 1.4
+        k = 1.2
         CI = [k*data_utils.CI_L8[x] for x in bands]
         SN = [k*data_utils.SN_L8[x] for x in bands]
         LA = [k*data_utils.LA_L8[x] for x in bands]
         HA = [k*data_utils.HA_L8[x] for x in bands]
         CC = [k*data_utils.CC_L8[x] for x in bands]
     elif  mission=="landsat7":
-        k = 1.3
+        k = 1.2
         CI = [k * data_utils.CI_L7[x] for x in bands]
         SN = [k * data_utils.SN_L7[x] for x in bands]
         LA = [k * data_utils.LA_L7[x] for x in bands]

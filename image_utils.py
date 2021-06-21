@@ -56,13 +56,20 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax, mission="se
                 output_cropped = os.path.join(img_destination + "_cropped", str(img_name) + ".jp2")
                 cmd = "gdal_translate {} {} {}".format(options, image, output_cropped)
                 os.system(cmd)
-                os.system("rm -f {}/*.xml".format(img_destination))
+
+                xml_files = os.listdir(img_destination)
+                for item in xml_files:
+                    if item.endswith(".xml"):
+                        os.remove(os.path.join(img_destination, item))
 
                 output_masked = os.path.join(img_destination, str(img_name) + ".jp2")
                 cmd = "gdalwarp {} {} -cutline mask.gpkg -crop_to_cutline".format(image, output_masked)
                 os.system(cmd)
-                os.system(cmd)
-                os.system("rm -f {}/*.xml".format(img_destination + "_cropped"))
+
+                xml_files = os.listdir(img_destination + "_cropped")
+                for item in xml_files:
+                    if item.endswith(".xml"):
+                        os.remove(os.path.join(img_destination + "_cropped", item))
 
         return 0
 
