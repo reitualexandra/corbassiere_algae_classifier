@@ -21,19 +21,17 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
     nr_pixels = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
 
     if mission=="landsat8":
-        k = 1.2
-        CI = [k*data_utils.CI_L8[x] for x in bands]
-        SN = [k*data_utils.SN_L8[x] for x in bands]
-        LA = [k*data_utils.LA_L8[x] for x in bands]
-        HA = [k*data_utils.HA_L8[x] for x in bands]
-        CC = [k*data_utils.CC_L8[x] for x in bands]
-    elif  mission=="landsat7":
-        k = 1.2
-        CI = [k * data_utils.CI_L7[x] for x in bands]
-        SN = [k * data_utils.SN_L7[x] for x in bands]
-        LA = [k * data_utils.LA_L7[x] for x in bands]
-        HA = [k * data_utils.HA_L7[x] for x in bands]
-        CC = [k * data_utils.CC_L7[x] for x in bands]
+        CI = [data_utils.CI_L8[x] for x in bands]
+        SN = [data_utils.SN_L8[x] for x in bands]
+        LA = [data_utils.LA_L8[x] for x in bands]
+        HA = [data_utils.HA_L8[x] for x in bands]
+        CC = [data_utils.CC_L8[x] for x in bands]
+    elif mission=="landsat7":
+        CI = [data_utils.CI_L7[x] for x in bands]
+        SN = [data_utils.SN_L7[x] for x in bands]
+        LA = [data_utils.LA_L7[x] for x in bands]
+        HA = [data_utils.HA_L7[x] for x in bands]
+        CC = [data_utils.CC_L7[x] for x in bands]
     else:
         CI = [data_utils.CI[x] for x in bands]
         SN = [data_utils.SN[x] for x in bands]
@@ -109,8 +107,8 @@ def main():
     #                               output="Greenland_Sentinel2", mission="sentinel2")
     minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Corbassiere"),
                                    output="Corbassiere_Sentinel2", mission="sentinel2")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-7", "Greenland"),
-    #                                output="Greenland_Landsat7", mission="landsat7")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Corbassiere"),
+    #                                output="Corbassiere_Landsat8", mission="landsat8")
 
 
 if __name__ == "__main__":

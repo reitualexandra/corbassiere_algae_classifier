@@ -8,6 +8,7 @@ coordinates for cropping.
 import os
 import glob
 from numpy import asarray
+import numpy
 import cv2
 import inspect
 import datetime
@@ -52,8 +53,8 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax, mission="se
 
             if img_name is not None:
                 log("Converting image {}".format(image))
-                options = "-projwin {} {} {} {} -of JP2OpenJPEG".format(xmin, ymin, xmax, ymax)
-                output_cropped = os.path.join(img_destination + "_cropped", str(img_name) + ".jp2")
+                options = "-projwin {} {} {} {} -of GTIFF ".format(xmin, ymin, xmax, ymax)
+                output_cropped = os.path.join(img_destination + "_cropped", str(img_name) + ".TIF")
                 cmd = "gdal_translate {} {} {}".format(options, image, output_cropped)
                 os.system(cmd)
 
@@ -62,7 +63,7 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax, mission="se
                     if item.endswith(".xml"):
                         os.remove(os.path.join(img_destination, item))
 
-                output_masked = os.path.join(img_destination, str(img_name) + ".jp2")
+                output_masked = os.path.join(img_destination, str(img_name) + ".TIF")
                 cmd = "gdalwarp {} {} -cutline mask.gpkg -crop_to_cutline".format(image, output_masked)
                 os.system(cmd)
 
@@ -74,7 +75,7 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax, mission="se
         return 0
 
 
-def normalize_image(source_image, min_value=0, max_value=1):
+def normalize_image(source_image, min_value=0, max_value=1, mission='sentinel2'):
     img = cv2.imread("{}".format(source_image))
     numpy_img = asarray(img)
     numpy_img_normalized = cv2.normalize(numpy_img, None, min_value, max_value, cv2.NORM_MINMAX, dtype=cv2.CV_64F)
@@ -129,9 +130,14 @@ def img_corners(img):
 #crop_images(img_source="/Users/areitu/Downloads/S2A_MSIL2A_20170809T145921_N9999_R125_T22WEV_20210602T172205.SAFE/GRANULE/L2A_T22WEV_A011133_20170809T150205/IMG_DATA/R60m",
 #            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Greenland",
 #            xmin=500000, ymin=7499941, xmax=614215, ymax=7392608, mission="sentinel2")
-#crop_images(img_source="/Users/areitu/Downloads/S2A_MSIL2A_20210519T103021_N9999_R108_T32TLR_20210605T145903.SAFE/GRANULE/L2A_T32TLR_A030850_20210519T103413/IMG_DATA/R10m",
-#            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Corbassiere",
-#            xmin=364090.59, ymin=5096444.81, xmax=370806.25, ymax=5089472.68, mission="sentinel2")
 #crop_images(img_source="/Users/areitu/Downloads/LE07_L2SP_195028_20100707_20200911_02_T1",
 #            img_destination="/Users/areitu/espace_bfea/Landsat-7/Corbassiere",
 #            xmin=364090.59, ymin=5096444.81, xmax=370806.25, ymax=5089472.68, mission="landsat7")
+
+
+#crop_images(img_source="C:\\Users\\Win10\\Downloads\\LC08_L2SP_195028_20200811_20200918_02_T1",
+#            img_destination=".\\Landsat-8\\Corbassiere",
+#            xmin=364090.59, ymin=5096444.81, xmax=370806.25, ymax=5089472.68, mission="landsat8")
+#crop_images(img_source="C:\\Users\\Win10\\Downloads\\L1C_T32TLR_A026846_20200812T103752\\S2A_MSIL2A_20200812T103031_N9999_R108_T32TLR_20210620T195206.SAFE\\GRANULE\\L2A_T32TLR_A026846_20200812T103752\\IMG_DATA\\R20m",
+#            img_destination=".\\Sentinel-2\\Corbassiere",
+#            xmin=364090.59, ymin=5096444.81, xmax=370806.25, ymax=5089472.68, mission="sentinel2")
