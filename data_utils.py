@@ -104,9 +104,9 @@ def create_dataset(file=HCRF_FILE, savefig=True):
     HAsites = ['5_8_16_site2_ice7', '5_8_16_site3_ice2', '5_8_16_site3_ice3',
                '5_8_16_site3_ice5', '5_8_16_site3_ice6', '5_8_16_site3_ice7', '5_8_16_site3_ice8',
                '5_8_16_site3_ice9',  '14_7_SB3', '14_7_SB7', '15_7_S2',
-                '13_7_S1', '13_7_S3', '14_7_S1', '15_7_S1', '15_7_SB2', '20_7_SB2', '21_7_SB5',
-                '21_7_SB8', '25_7_S3', '5_8_16_site2_ice10', '5_8_16_site2_ice5',
-                '5_8_16_site2_ice9', '27_7_16_SITE3_WHITE3']
+                '13_7_S1', '13_7_S3']#, '14_7_S1', '15_7_S1', '15_7_SB2', '20_7_SB2', '21_7_SB5']
+               # '21_7_SB8', '25_7_S3', '5_8_16_site2_ice10', '5_8_16_site2_ice5',
+                #'5_8_16_site2_ice9', '27_7_16_SITE3_WHITE3']
 
     LAsites = ['14_7_S2', '14_7_S3', '14_7_SB2', '14_7_SB3', '14_7_SB7', '15_7_S2',
                '15_7_SB4', '20_7_SB1', '20_7_SB3', '21_7_S1', '21_7_S5', '21_7_SB4', '22_7_SB2',
@@ -125,10 +125,13 @@ def create_dataset(file=HCRF_FILE, savefig=True):
                '5_8_16_site2_ice4', '5_8_16_site2_ice6', '5_8_16_site2_ice8',
                '5_8_16_site3_ice1', '5_8_16_site3_ice4']
 
+    CCsites = ['21_7_SB5', '21_7_SB8', 'WAT_1', 'WAT_3', 'WAT_6',
+               'DISP12', 'DISP13', 'DISP14', '27_7_16_SITE3_DISP1',
+               '27_7_16_SITE3_DISP3']
+
     CCsites = ['DISP1', 'DISP2', 'DISP3', 'DISP4', 'DISP5', 'DISP6', 'DISP7', 'DISP8',
                'DISP9', 'DISP10', 'DISP11', 'DISP12', 'DISP13', 'DISP14', '27_7_16_SITE3_DISP1',
                '27_7_16_SITE3_DISP3']
-    CCsites = ['21_7_SB5', '21_7_SB8', 'WAT_1', 'WAT_3', 'WAT_6']
 
     WATsites = ['21_7_SB5', '21_7_SB8', 'WAT_1', 'WAT_3', 'WAT_6']
 

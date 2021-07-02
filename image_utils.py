@@ -138,6 +138,6 @@ def img_corners(img):
 #crop_images(img_source="C:\\Users\\Win10\\Downloads\\LC08_L2SP_007013_20170814_20200903_02_T1",
 #            img_destination=".\\Landsat-8\\Greenland",
 #            xmin=500000, ymin=7499941, xmax=614215, ymax=7392608, mission="landsat8")
-#crop_images(img_source="C:\\Users\\Win10\\Downloads\\",
+#crop_images(img_source="C:\\Users\\Win10\\Downloads\\S2A_MSIL1C_20170812T150911_N0205_R025_T22WEV_20170812T150912.SAFE\\GRANULE\\L1C_T22WEV_A011176_20170812T150912\\IMG_DATA",
 #            img_destination=".\\Sentinel-2\\Greenland",
 #            xmin=364090.59, ymin=5096444.81, xmax=370806.25, ymax=5089472.68, mission="sentinel2")
