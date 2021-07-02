@@ -135,9 +135,9 @@ def img_corners(img):
 #            xmin=364090.59, ymin=5096444.81, xmax=370806.25, ymax=5089472.68, mission="landsat7")
 
 
-#crop_images(img_source="C:\\Users\\Win10\\Downloads\\LC08_L2SP_195028_20200811_20200918_02_T1",
-#            img_destination=".\\Landsat-8\\Corbassiere",
-#            xmin=364090.59, ymin=5096444.81, xmax=370806.25, ymax=5089472.68, mission="landsat8")
-#crop_images(img_source="C:\\Users\\Win10\\Downloads\\L1C_T32TLR_A026846_20200812T103752\\S2A_MSIL2A_20200812T103031_N9999_R108_T32TLR_20210620T195206.SAFE\\GRANULE\\L2A_T32TLR_A026846_20200812T103752\\IMG_DATA\\R20m",
-#            img_destination=".\\Sentinel-2\\Corbassiere",
+#crop_images(img_source="C:\\Users\\Win10\\Downloads\\LC08_L2SP_007013_20170814_20200903_02_T1",
+#            img_destination=".\\Landsat-8\\Greenland",
+#            xmin=500000, ymin=7499941, xmax=614215, ymax=7392608, mission="landsat8")
+#crop_images(img_source="C:\\Users\\Win10\\Downloads\\",
+#            img_destination=".\\Sentinel-2\\Greenland",
 #            xmin=364090.59, ymin=5096444.81, xmax=370806.25, ymax=5089472.68, mission="sentinel2")

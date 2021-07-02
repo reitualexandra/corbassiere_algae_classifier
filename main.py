@@ -20,18 +20,20 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
     coordinates = IMAGES["coordinates"]
     nr_pixels = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
 
-    if mission=="landsat8":
-        CI = [data_utils.CI_L8[x] for x in bands]
-        SN = [data_utils.SN_L8[x] for x in bands]
-        LA = [data_utils.LA_L8[x] for x in bands]
-        HA = [data_utils.HA_L8[x] for x in bands]
-        CC = [data_utils.CC_L8[x] for x in bands]
-    elif mission=="landsat7":
-        CI = [data_utils.CI_L7[x] for x in bands]
-        SN = [data_utils.SN_L7[x] for x in bands]
-        LA = [data_utils.LA_L7[x] for x in bands]
-        HA = [data_utils.HA_L7[x] for x in bands]
-        CC = [data_utils.CC_L7[x] for x in bands]
+    if mission == "landsat8":
+        k = 1.15
+        CI = k*numpy.array([data_utils.CI_L8[x] for x in bands])
+        SN = k*numpy.array([data_utils.SN_L8[x] for x in bands])
+        LA = k*numpy.array([data_utils.LA_L8[x] for x in bands])
+        HA = k*numpy.array([data_utils.HA_L8[x] for x in bands])
+        CC = k*numpy.array([data_utils.CC_L8[x] for x in bands])
+    elif mission == "landsat7":
+        k = 1.15
+        CI = k*numpy.array([data_utils.CI_L7[x] for x in bands])
+        SN = k*numpy.array([data_utils.SN_L7[x] for x in bands])
+        LA = k*numpy.array([data_utils.LA_L7[x] for x in bands])
+        HA = k*numpy.array([data_utils.HA_L7[x] for x in bands])
+        CC = k*numpy.array([data_utils.CC_L7[x] for x in bands])
     else:
         CI = [data_utils.CI[x] for x in bands]
         SN = [data_utils.SN[x] for x in bands]
@@ -101,12 +103,14 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
 
 
 def main():
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Greenland"),
-    #                                output="Greenland_Landsat", mission="landsat8")
+    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-7", "Greenland_cropped"),
+                                    output="Greenland_Landsat7", mission="landsat7")
+    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Greenland_cropped"),
+                                    output="Greenland_Landsat8", mission="landsat8")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Greenland"),
     #                               output="Greenland_Sentinel2", mission="sentinel2")
-    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Corbassiere"),
-                                   output="Corbassiere_Sentinel2", mission="sentinel2")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Corbassiere"),
+    #                               output="Corbassiere_Sentinel2", mission="sentinel2")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Corbassiere"),
     #                                output="Corbassiere_Landsat8", mission="landsat8")
 
