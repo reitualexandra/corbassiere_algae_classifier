@@ -94,6 +94,8 @@ def create_dataset(file=HCRF_FILE, savefig=True):
     hcrf_master = pd.read_csv(file)
     HA_hcrf = pd.DataFrame()
     LA_hcrf = pd.DataFrame()
+    HA_hcrf_S2 = pd.DataFrame()
+    LA_hcrf_S2 = pd.DataFrame()
     CI_hcrf = pd.DataFrame()
     CC_hcrf = pd.DataFrame()
     WAT_hcrf = pd.DataFrame()
@@ -104,9 +106,7 @@ def create_dataset(file=HCRF_FILE, savefig=True):
     HAsites = ['5_8_16_site2_ice7', '5_8_16_site3_ice2', '5_8_16_site3_ice3',
                '5_8_16_site3_ice5', '5_8_16_site3_ice6', '5_8_16_site3_ice7', '5_8_16_site3_ice8',
                '5_8_16_site3_ice9',  '14_7_SB3', '14_7_SB7', '15_7_S2',
-                '13_7_S1', '13_7_S3']#, '14_7_S1', '15_7_S1', '15_7_SB2', '20_7_SB2', '21_7_SB5']
-               # '21_7_SB8', '25_7_S3', '5_8_16_site2_ice10', '5_8_16_site2_ice5',
-                #'5_8_16_site2_ice9', '27_7_16_SITE3_WHITE3']
+                '13_7_S1', '13_7_S3']
 
     LAsites = ['14_7_S2', '14_7_S3', '14_7_SB2', '14_7_SB3', '14_7_SB7', '15_7_S2',
                '15_7_SB4', '20_7_SB1', '20_7_SB3', '21_7_S1', '21_7_S5', '21_7_SB4', '22_7_SB2',
@@ -125,10 +125,6 @@ def create_dataset(file=HCRF_FILE, savefig=True):
                '5_8_16_site2_ice4', '5_8_16_site2_ice6', '5_8_16_site2_ice8',
                '5_8_16_site3_ice1', '5_8_16_site3_ice4']
 
-    CCsites = ['21_7_SB5', '21_7_SB8', 'WAT_1', 'WAT_3', 'WAT_6',
-               'DISP12', 'DISP13', 'DISP14', '27_7_16_SITE3_DISP1',
-               '27_7_16_SITE3_DISP3']
-
     CCsites = ['DISP1', 'DISP2', 'DISP3', 'DISP4', 'DISP5', 'DISP6', 'DISP7', 'DISP8',
                'DISP9', 'DISP10', 'DISP11', 'DISP12', 'DISP13', 'DISP14', '27_7_16_SITE3_DISP1',
                '27_7_16_SITE3_DISP3']
@@ -142,13 +138,42 @@ def create_dataset(file=HCRF_FILE, savefig=True):
                '5_8_16_site1_snow4', '5_8_16_site1_snow6', '5_8_16_site1_snow7',
                '5_8_16_site1_snow9']
 
+    HAsites_S2 = ['13_7_SB2', '13_7_SB4', '14_7_S5', '14_7_SB1', '14_7_SB5', '14_7_SB10',
+               '15_7_SB3', '21_7_SB1', '21_7_SB7', '22_7_SB4', '22_7_SB5', '22_7_S3', '22_7_S5',
+               '23_7_SB3', '23_7_SB5', '23_7_S3', '23_7_SB4', '24_7_SB2', 'HA_1', 'HA_2', 'HA_3',
+               'HA_4', 'HA_5', 'HA_6', 'HA_7', 'HA_8', 'HA_10', 'HA_11', 'HA_12', 'HA_13', 'HA_14',
+               'HA_15', 'HA_16', 'HA_17', 'HA_18', 'HA_19', 'HA_20', 'HA_21', 'HA_22', 'HA_24',
+               'HA_25', 'HA_26', 'HA_27', 'HA_28', 'HA_29', 'HA_30', 'HA_31', '13_7_S2', '14_7_SB9',
+               'MA_11', 'MA_14', 'MA_15', 'MA_17', '21_7_SB2', '22_7_SB1', 'MA_4', 'MA_7', 'MA_18',
+               '27_7_16_SITE3_WMELON1', '27_7_16_SITE3_WMELON3', '27_7_16_SITE2_ALG1',
+               '27_7_16_SITE2_ALG2', '27_7_16_SITE2_ALG3', '27_7_16_SITE2_ICE3', '27_7_16_SITE2_ICE5',
+               '27_7_16_SITE3_ALG4', '5_8_16_site2_ice7', '5_8_16_site3_ice2', '5_8_16_site3_ice3',
+               '5_8_16_site3_ice5', '5_8_16_site3_ice6', '5_8_16_site3_ice7', '5_8_16_site3_ice8',
+               '5_8_16_site3_ice9']
+
+    LAsites_S2 = ['14_7_S2', '14_7_S3', '14_7_SB2', '14_7_SB3', '14_7_SB7', '15_7_S2',
+               '15_7_SB4', '20_7_SB1', '20_7_SB3', '21_7_S1', '21_7_S5', '21_7_SB4', '22_7_SB2',
+               '22_7_SB3', '22_7_S1', '23_7_S1', '23_7_S2', '24_7_S2', 'MA_1', 'MA_2', 'MA_3',
+               'MA_5', 'MA_6', 'MA_8', 'MA_9', 'MA_10', 'MA_12', 'MA_13', 'MA_16', 'MA_19',
+               '13_7_S1', '13_7_S3', '14_7_S1', '15_7_S1', '15_7_SB2', '20_7_SB2', '21_7_SB5',
+               '21_7_SB8', '25_7_S3', '5_8_16_site2_ice10', '5_8_16_site2_ice5',
+               '5_8_16_site2_ice9', '27_7_16_SITE3_WHITE3']
+
     for i in HAsites:
         hcrf_HA = np.array(hcrf_master[i])
         HA_hcrf['{}'.format(i)] = hcrf_HA
 
+    for i in HAsites_S2:
+        hcrf_HA = np.array(hcrf_master[i])
+        HA_hcrf_S2['{}'.format(i)] = hcrf_HA
+
     for ii in LAsites:
         hcrf_LA = np.array(hcrf_master[ii])
         LA_hcrf['{}'.format(ii)] = hcrf_LA
+
+    for ii in LAsites_S2:
+        hcrf_LA = np.array(hcrf_master[ii])
+        LA_hcrf_S2['{}'.format(ii)] = hcrf_LA
 
     for iii in CIsites:
         hcrf_CI = np.array(hcrf_master[iii])
@@ -170,8 +195,8 @@ def create_dataset(file=HCRF_FILE, savefig=True):
         min_wl_index = BANDS[band][0] - 350
         max_wl_index = BANDS[band][1] - 350
 
-        HA[band] = HA_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
-        LA[band] = LA_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        HA[band] = HA_hcrf_S2[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
+        LA[band] = LA_hcrf_S2[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
         CI[band] = CI_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
         CC[band] = CC_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
         WAT[band] = WAT_hcrf[min_wl_index:max_wl_index].mean(axis='columns').mean(axis='index').astype(np.float64)
