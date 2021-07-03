@@ -75,14 +75,20 @@ def crop_images(img_source, img_destination, xmin, ymin, xmax, ymax, mission="se
         return 0
 
 
-def normalize_image(source_image, min_value=0, max_value=1, mission='sentinel2'):
+def normalize_image(source_image, min_value=0, max_value=1, mission="sentinel2"):
     img = cv2.imread("{}".format(source_image))
-    numpy_img = asarray(img)
-    numpy_img_normalized = cv2.normalize(numpy_img, None, min_value, max_value, cv2.NORM_MINMAX, dtype=cv2.CV_64F)
-    return numpy_img_normalized
+    if mission == "sentinel2":
+        kmax = 70
+    elif mission == "landsat8":
+        kmax = 220
+    else:
+        kmax = 255
+
+    img = asarray(img, dtype=numpy.float64)/kmax
+    return img
 
 
-def create_raster(source_dir):
+def create_raster(source_dir, mission='sentinel2'):
     IMAGES = {}
     image_paths = glob.glob(os.path.join(source_dir, "*"))
     image_extension = image_paths[0].split(".")[-1]
@@ -94,7 +100,7 @@ def create_raster(source_dir):
     for image_name in image_names:
         band = image_name
         image_path = os.path.join(source_dir, "{}.{}".format(image_name, image_extension))
-        image_data = normalize_image(image_path)
+        image_data = normalize_image(image_path, mission=mission)
         IMAGES[band] = image_data
         IMAGES["coordinates"] = img_corners(img=image_path)
 
@@ -130,9 +136,9 @@ def img_corners(img):
 #crop_images(img_source="/Users/areitu/Downloads/S2A_MSIL2A_20170809T145921_N9999_R125_T22WEV_20210602T172205.SAFE/GRANULE/L2A_T22WEV_A011133_20170809T150205/IMG_DATA/R60m",
 #            img_destination="/Users/areitu/espace_bfea/Sentinel-2/Greenland",
 #            xmin=500000, ymin=7499941, xmax=614215, ymax=7392608, mission="sentinel2")
-#crop_images(img_source="/Users/areitu/Downloads/LE07_L2SP_195028_20100707_20200911_02_T1",
-#            img_destination="/Users/areitu/espace_bfea/Landsat-7/Corbassiere",
-#            xmin=364090.59, ymin=5096444.81, xmax=370806.25, ymax=5089472.68, mission="landsat7")
+#crop_images(img_source="C:\\Users\\Win10\\Downloads\\LC08_L2SP_195028_20200811_20200918_02_T1",
+#            img_destination=".\\Landsat-8\\Corbassiere",
+#            xmin=364090.59, ymin=5096444.81, xmax=370806.25, ymax=5089472.68, mission="landsat8")
 
 
 #crop_images(img_source="C:\\Users\\Win10\\Downloads\\LC08_L2SP_007013_20170814_20200903_02_T1",

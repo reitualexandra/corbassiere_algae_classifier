@@ -14,32 +14,33 @@ import os
 
 def minimum_distance_classification(source_dir, output="Classification.png", title="Glacier Classification", mission="sentinel2"):
     data_utils.create_dataset(file=data_utils.HCRF_FILE, savefig=True)
-    IMAGES = image_utils.create_raster(source_dir)
+    IMAGES = image_utils.create_raster(source_dir, mission=mission)
     bands = list(IMAGES.keys())
     bands.remove("coordinates")
     coordinates = IMAGES["coordinates"]
     nr_pixels = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
 
     if mission == "landsat8":
-        k = 1.15
+        k = 1
         CI = k*numpy.array([data_utils.CI_L8[x] for x in bands])
         SN = k*numpy.array([data_utils.SN_L8[x] for x in bands])
         LA = k*numpy.array([data_utils.LA_L8[x] for x in bands])
         HA = k*numpy.array([data_utils.HA_L8[x] for x in bands])
         CC = k*numpy.array([data_utils.CC_L8[x] for x in bands])
     elif mission == "landsat7":
-        k = 1.15
+        k = 1.2
         CI = k*numpy.array([data_utils.CI_L7[x] for x in bands])
         SN = k*numpy.array([data_utils.SN_L7[x] for x in bands])
         LA = k*numpy.array([data_utils.LA_L7[x] for x in bands])
         HA = k*numpy.array([data_utils.HA_L7[x] for x in bands])
         CC = k*numpy.array([data_utils.CC_L7[x] for x in bands])
     else:
-        CI = [data_utils.CI[x] for x in bands]
-        SN = [data_utils.SN[x] for x in bands]
-        LA = [data_utils.LA[x] for x in bands]
-        HA = [data_utils.HA[x] for x in bands]
-        CC = [data_utils.CC[x] for x in bands]
+        k = 0.5
+        CI = k*numpy.array([data_utils.CI[x] for x in bands])
+        SN = k*numpy.array([data_utils.SN[x] for x in bands])
+        LA = k*numpy.array([data_utils.LA[x] for x in bands])
+        HA = k*numpy.array([data_utils.HA[x] for x in bands])
+        CC = k*numpy.array([data_utils.CC[x] for x in bands])
 
     image_shape = numpy.shape(list(IMAGES.items())[0][1])
     MAP_DATA = numpy.zeros([image_shape[0], image_shape[1], 3], dtype=numpy.uint8)
@@ -105,14 +106,19 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
 def main():
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-7", "Greenland_cropped"),
     #                                output="Greenland_Landsat7", mission="landsat7")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Greenland_cropped"),
-    #                                output="Greenland_Landsat8", mission="landsat8")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Greenland_cropped"),
-    #                               output="Greenland_Sentinel2", mission="sentinel2")
-    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Corbassiere"),
-                                   output="Corbassiere_Sentinel2", mission="sentinel2")
-    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Corbassiere"),
-                                    output="Corbassiere_Landsat8", mission="landsat8")
+    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Greenland_cropped"),
+                                    output="Greenland_Landsat8", mission="landsat8")
+    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Greenland_cropped"),
+                                   output="Greenland_Sentinel2", mission="sentinel2")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-7", "2014"),
+    #                               output="Corbassiere_Landsat7", mission="landsat7", title="L7 2014")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "2014"),
+    #                                output="Corbassiere_Landsat8", mission="landsat8", title="L8 2014 *TRUE")
+
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "2015"),
+    #                                output="Corbassiere_Sentinel2", mission="sentinel2", title="S2 2015")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "2014"),
+    #                                output="Corbassiere_Landsat8", mission="landsat8", title="L8 2014")
 
 
 if __name__ == "__main__":
