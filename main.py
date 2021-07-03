@@ -103,12 +103,12 @@ def minimum_distance_classification(source_dir, output="Classification.png", tit
 
 
 def main():
-    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-7", "Greenland_cropped"),
-                                    output="Greenland_Landsat7", mission="landsat7")
-    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Greenland_cropped"),
-                                    output="Greenland_Landsat8", mission="landsat8")
-    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Greenland"),
-    #                               output="Greenland_Sentinel2", mission="sentinel2")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-7", "Greenland_cropped"),
+    #                                output="Greenland_Landsat7", mission="landsat7")
+    #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Greenland_cropped"),
+    #                                output="Greenland_Landsat8", mission="landsat8")
+    minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Greenland_cropped"),
+                                   output="Greenland_Sentinel2", mission="sentinel2")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Sentinel-2", "Corbassiere"),
     #                               output="Corbassiere_Sentinel2", mission="sentinel2")
     #minimum_distance_classification(source_dir=os.path.join(os.getcwd(), "Landsat-8", "Corbassiere"),
