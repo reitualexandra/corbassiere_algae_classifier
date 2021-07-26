@@ -1,12 +1,16 @@
 # Corbassiere Algae Classifier
 
 This repository is a (minimal) sample classifier software for glacier algae, applied on the Corbassiere glacier in the European Alps. The scripts are using training data from https://github.com/jmcook1186/IceSurfClassifiers . The scripts use the minimum distance classification algorithm, and are adapted to work with Sentinel-2, Landsat-7 and Landsat-8 imagery. 
+
 The satellite imagery can be downloaded from https://earthexplorer.usgs.gov/ . Note that the Sentinel-2 imagery requires preprocessing with ESA's sen2cor commandline tool: https://step.esa.int/main/snap-supported-plugins/sen2cor/ . For Landsat, level 2 imagery can be used without any preprocessing.
 The scripts output a classified map containing 6 classes (snow, ice, algae: high + low, rocks). Below you can see computed results for the Corbassiere glacier, as well as a map of the western coast of Greenland:
 
 ![Corbassiere_Landsat7](https://user-images.githubusercontent.com/83270197/127006358-d7099711-63c8-4551-8711-deb95428aba6.png)
-![Greenland_Landsat7](https://user-images.githubusercontent.com/83270197/127006384-99e2f18e-7465-4527-b1b3-67b5493454b6.png)
+![Corbassiere_Landsat7_figure](https://user-images.githubusercontent.com/83270197/127008339-43ec14cd-60f0-46ed-ab86-a7c335776998.png)
 
+![Greenland_Landsat7 - Copy](https://user-images.githubusercontent.com/83270197/127008324-765295a4-fd08-47ef-8f4a-0de93d5afe51.png)
+
+Note that this software was implemented as part of a faculty project and is in no way an accurate scientific tool.
 
 # Scripts
 
