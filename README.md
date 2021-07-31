@@ -9,8 +9,6 @@ The scripts output a classified map containing 6 classes (snow, ice, algae: high
 ![Greenland_Landsat7_figure](https://user-images.githubusercontent.com/83270197/127008845-bd3935b4-a18f-44da-b159-bc03f4445004.png)
 
 
-Note that this software was implemented as part of a faculty project and is not an accurate scientific tool.
-
 # Scripts
 
 data_utils.py - contains functions that gather and process training data, define the bands for each mission and set the colors for each class
